@@ -1,0 +1,27 @@
+{
+  "appenders": [
+    {
+      "type": "dateFile",
+      "filename": "logs/console",
+      "pattern": "-yyyyMMdd.log",
+      "alwaysIncludePattern": true,
+      "category": [
+        "console"
+      ]
+    },
+    {
+      "type": "dateFile",
+      "filename": "logs/server",
+      "pattern": "-yyyyMMdd.log",
+      "alwaysIncludePattern": true,
+      "category": [
+      ]
+    },
+    {
+      "type": "console"
+    }
+  ],
+  "replaceConsole": true,
+  "levels": {
+  }
+}
