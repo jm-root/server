@@ -22,7 +22,7 @@ module.exports = class {
         let parent = null
         try {
           parent = tracer.extract(FORMAT_HTTP_HEADERS, headers)
-        } catch (e) { console.error(e) }
+        } catch (e) { }
         if (!trace && !parent) return next()
 
         const old = res.json.bind(res)
