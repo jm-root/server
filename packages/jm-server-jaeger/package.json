@@ -1,0 +1,32 @@
+{
+  "name": "jm-server-jaeger",
+  "version": "0.0.1",
+  "description": "trace plugin for jm-server",
+  "main": "./lib/index",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jm-root/gateway.git"
+  },
+  "keywords": [
+    "javascript",
+    "jm-server-trace"
+  ],
+  "author": {
+    "name": "Jeff YU"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jm-root/gateway/issues"
+  },
+  "homepage": "https://github.com/jm-root/gateway",
+  "dependencies": {
+    "jaeger-client": "^3.12.0",
+    "jm-server-opentracing": "^0.0.1"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}

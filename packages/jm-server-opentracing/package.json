@@ -1,0 +1,32 @@
+{
+  "name": "jm-server-opentracing",
+  "version": "0.0.1",
+  "description": "opentracing plugin for jm-server",
+  "main": "./lib/index",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jm-root/gateway.git"
+  },
+  "keywords": [
+    "javascript",
+    "jm-server-opentracing"
+  ],
+  "author": {
+    "name": "Jeff YU"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jm-root/gateway/issues"
+  },
+  "homepage": "https://github.com/jm-root/gateway",
+  "dependencies": {
+    "cls-hooked": "^4.2.2",
+    "opentracing": "^0.14.4"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}
