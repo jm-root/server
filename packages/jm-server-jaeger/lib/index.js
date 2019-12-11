@@ -5,9 +5,11 @@ const logger = log.getLogger('server-jaeger')
 module.exports = function (opts = {}) {
   const app = this || {}
 
-  const { serviceName = 'unknown', jaeger, debug } = opts
+  let { service_name: serviceName, jaeger, debug } = opts
   debug && (logger.setLevel('debug'))
 
+  serviceName || (serviceName = opts.serviceName)
+  if (!serviceName) return logger.warn('no service_name found. so I can not work.')
   if (!jaeger) return logger.warn('no jaeger found. so I can not work.')
 
   app

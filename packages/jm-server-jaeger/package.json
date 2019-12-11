@@ -1,6 +1,6 @@
 {
   "name": "jm-server-jaeger",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "trace plugin for jm-server",
   "main": "./lib/index",
   "scripts": {

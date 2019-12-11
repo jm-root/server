@@ -6,4 +6,4 @@ jaeger plugin for jm-server
 
 jaeger 服务器URI
 
-serviceName 服务名称
+service_name 服务名称
