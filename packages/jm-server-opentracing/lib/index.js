@@ -77,7 +77,7 @@ module.exports = class {
             const span = tracer.startSpan(operationName, { childOf: parent })
             span.addTags({
               component: 'axios',
-              'span.kind': 'client'
+              'span.kind': 'server'
             })
             namespace.set(NS_SPAN_AXIOS, span)
             tracer.inject(span, FORMAT_HTTP_HEADERS, config.headers)
