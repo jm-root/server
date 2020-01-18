@@ -4,6 +4,8 @@
     "packages/*"
   ],
   "scripts": {
+    "start": "npx jm-server",
+    "cluster": "npx jm-server --cluster",
     "lint": "standard",
     "lint:fix": "standard --fix"
   },
@@ -25,6 +27,12 @@
     "ignore": [
       "**/dist/"
     ]
+  },
+  "dependencies": {
+    "config": "^3.2.3",
+    "jm-log4js": "^2.0.5",
+    "jm-ms-message": "^2.0.0",
+    "log4js": "^6.1.0"
   },
   "devDependencies": {
     "husky": "^1.2.0",

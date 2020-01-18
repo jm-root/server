@@ -127,6 +127,7 @@ let server = function (opts = {}) {
         }
       }
 
+      let moduleInfo = null
       let module = null
       let router = null
 
@@ -160,7 +161,9 @@ let server = function (opts = {}) {
             logger.warn('use failed. %s: %j', name, opts)
             return this
           }
-          let Module = require(opts.module)
+          const Module = require(opts.module)
+          const { version } = require(`${opts.module}/package.json`)
+          moduleInfo = { version }
           if (typeof Module === 'function') {
             module = Module.call(app, Object.assign({}, config, opts.config), app)
           } else {
@@ -184,7 +187,7 @@ let server = function (opts = {}) {
         }
       }
 
-      this.moduleConfigs[name] = opts
+      this.moduleConfigs[name] = { ...opts, ...moduleInfo }
       this.modules[name] = module
       this.routers[name] = router
       logger.info('use ok. %s: %j', name, opts)

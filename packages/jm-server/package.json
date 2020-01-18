@@ -27,18 +27,11 @@
     "colors": "^1.1.2",
     "express": "^4.15.2",
     "http-proxy-middleware": "^0.17.4",
-    "jm-log4js": "^1.1.0",
+    "jm-log4js": "^2.0.5",
     "jm-ms": "^2.1.1",
     "jm-ms-help": "^2.0.1",
     "sprintf-js": "^1.0.3",
     "yargs": "^7.0.2"
-  },
-  "devDependencies": {
-    "config": "^2.0.1",
-    "jm-err": "^1.0.5",
-    "jm-event": "^2.0.9",
-    "jm-ms-core": "^2.0.7",
-    "jm-ms-message": "^2.0.0"
   },
   "bin": {
     "jm-server": "./bin/jm-server",
