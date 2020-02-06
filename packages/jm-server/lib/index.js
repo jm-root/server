@@ -51,6 +51,9 @@ let server = function (opts = {}) {
   })
   // ---- deprecated end ----
 
+  const { debug } = opts
+  debug && (logger.setLevel('debug'))
+
   let app = {
     config: config,
 

@@ -30,7 +30,6 @@
   },
   "dependencies": {
     "config": "^3.2.3",
-    "jm-log4js": "^2.0.5",
     "jm-ms-message": "^2.0.0",
     "log4js": "^6.1.0"
   },
