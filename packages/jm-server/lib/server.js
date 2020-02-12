@@ -2,10 +2,9 @@ const log = require('jm-log4js')
 const MS = require('jm-ms')
 const http = require('http')
 const express = require('express')
-const bodyParser = require('body-parser')
 
-let logger = log.getLogger('server')
-let ms = new MS()
+const logger = log.getLogger('server')
+const ms = new MS()
 
 module.exports = function (app) {
   let appWeb = null
@@ -24,28 +23,24 @@ module.exports = function (app) {
    */
   app.open = async function (opts = {}) {
     this.emit('beforeOpen', opts)
-    let self = this
-    let config = this.config
-    let root = this.root
-    let servers = this.servers
+    const self = this
+    const { config, root, servers } = this
     root.config = config
 
     // 启动web模块
     appWeb = express()
-    let port = config.port || 3000
-    let host = config.host || '0.0.0.0'
+    const { debug, lng, host = '0.0.0.0', port = 3000, max_body_size: maxBodySize, trust_proxy: trustProxy = false } = config
     server = http.createServer(appWeb).listen(port, host, function () {
       logger.info('ms server listening on %s:%s ', host, server.address().port)
     })
-    if (config.max_body_size) {
-      appWeb.use(bodyParser.json({ limit: config.max_body_size }))
-      appWeb.use(bodyParser.urlencoded({ limit: config.max_body_size, extended: true }))
+    if (maxBodySize) {
+      appWeb.use(express.json({ limit: maxBodySize }))
+      appWeb.use(express.urlencoded({ limit: maxBodySize, extended: true }))
     } else {
-      appWeb.use(bodyParser.json())
-      appWeb.use(bodyParser.urlencoded({ extended: true }))
+      appWeb.use(express.json())
+      appWeb.use(express.urlencoded({ extended: true }))
     }
-    let trustProxy = false
-    config.trust_proxy && (trustProxy = true)
+
     appWeb.set('trust proxy', trustProxy) // 支持代理后面获取用户真实ip
 
     // 设置跨域访问
@@ -64,19 +59,16 @@ module.exports = function (app) {
     })
 
     // 启动ms服务器
-    let configMS = config.ms || [
-      {
-        type: 'ws'
-      },
-      {
-        type: 'http'
-      }
-    ]
-    for (let i in configMS) {
-      let opts = configMS[i]
+    const { ms: configMS = [
+      { type: 'ws' },
+      { type: 'http' }
+    ] } = config
+
+    for (const i in configMS) {
+      const opts = configMS[i]
       opts.server = server
       opts.app = appWeb
-      let doc = await ms.server(root, opts)
+      const doc = await ms.server(root, opts)
       logger.info('ms server type:%s started', opts.type)
       servers[opts.type] = doc
       doc.on('connection', function (session) {
@@ -84,17 +76,20 @@ module.exports = function (app) {
       })
     }
 
-    let router = express.Router()
+    const router = express.Router()
     servers.http.middle = router
-    if (app.config.debug) {
+    if (debug) {
       router.use(function (req, res, next) {
-        logger.debug('%s %s params: %j query: %j body: %j headers: %j', req.method, req.url, req.params, req.query, req.body, req.headers)
+        // const {method, url, params, query, body, headers} = req
+        // logger.debug('%s %s params: %j query: %j body: %j headers: %j', method, url, params, query, body, headers)
+        const { method, url } = req
+        logger.debug(`${method} ${url}`)
         next()
       })
     }
-    if (app.config.lng) {
+    if (lng) {
       router.use(function (req, res, next) {
-        req.lng = app.config.lng
+        req.lng = lng
         next()
       })
     }

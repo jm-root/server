@@ -1,20 +1,19 @@
 #!/usr/bin/env node
 
 'use strict'
-const cluster = require('cluster')
-var fs = require('fs')
-var path = require('path')
-var spawn = require('child_process').spawn
-var argv = require('yargs')
+const fs = require('fs')
+const path = require('path')
+const spawn = require('child_process').spawn
+const argv = require('yargs')
   .alias('v', 'version')
   .alias('h', 'help')
   .alias('D', 'daemon')
   .argv
 
 if (argv.v) {
-  var pkg = require('../package.json')
+  const pkg = require('../package.json')
   console.log('%s %s', pkg.name, pkg.version)
-  return
+  process.exit(0)
 }
 
 if (argv.h || argv.help) {
@@ -42,36 +41,35 @@ if (argv.h || argv.help) {
     '',
     '  -h --help    Print this list and exit.'
   ].join('\n'))
-  process.exit()
+  process.exit(0)
 }
 
-var root = argv._[0]
+let root = argv._[0]
 if (root && !path.isAbsolute(root)) {
   root = path.join(process.cwd(), root)
 }
 root || (root = process.cwd())
 
-var isProject = true
-var pkgFile = path.join(root, '/package.json')
+let isProject = true
+const pkgFile = path.join(root, '/package.json')
 try {
   fs.accessSync(pkgFile, fs.constants.R_OK)
-}
-catch (e) {
+} catch (e) {
   isProject = false
 }
 
 if (isProject && !argv.nospawn) {
-  var ls
-  var absScript = path.resolve(root, 'node_modules/jm-server/bin/jm-server')
-  var params = process.argv.slice(1)
+  const absScript = path.resolve(root, 'node_modules/jm-server/bin/jm-server')
+  const params = process.argv.slice(1)
   params[0] = absScript
   params.push('--nospawn')
+
   if (argv.daemon) {
-    ls = spawn(process.execPath, params, {detached: true, stdio: 'ignore'})
+    const ls = spawn(process.execPath, params, { detached: true, stdio: 'ignore' })
     ls.unref()
     process.exit(0)
   } else {
-    ls = spawn(process.execPath, params)
+    const ls = spawn(process.execPath, params)
     ls.stdout.on('data', function (data) {
       console.log(data.toString())
     })
@@ -80,7 +78,7 @@ if (isProject && !argv.nospawn) {
     })
   }
 } else {
-  var bCluster = argv.cluster || process.env.cluster
+  const bCluster = argv.cluster || process.env.cluster
   if (bCluster) {
     require('./cluster')
   } else {

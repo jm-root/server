@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
 'use strict'
-var colors = require('colors')  // eslint-disable-line
-var fs = require('fs')
-var path = require('path')
-var argv = require('yargs')
+require('colors')
+const fs = require('fs')
+const path = require('path')
+const argv = require('yargs')
   .alias('c', 'config')
   .alias('p', 'port')
   .alias('a', 'host')
@@ -15,18 +15,20 @@ var argv = require('yargs')
   .alias('D', 'daemon')
   .argv
 
-var root = argv._[0]
+const { Server } = require('../lib')
+
+let root = argv._[0]
 if (root && !path.isAbsolute(root)) {
   root = path.join(process.cwd(), root)
 }
 root || (root = process.cwd())
 
-var config = null
+let config = null
 configure()
 module.exports = startApp()
 
 function configure () {
-  var configFile = argv.c
+  let configFile = argv.c
   if (configFile && !path.isAbsolute(configFile)) {
     configFile = path.join(root, configFile)
   }
@@ -47,7 +49,7 @@ function configure () {
 }
 
 function startApp () {
-  return require('../lib')(config)
+  return new Server(config)
 }
 
 function stopApp () {

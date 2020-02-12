@@ -22,6 +22,6 @@ module.exports = function (app) {
     opts.help.status = status
     opts.help.modules = _modules
   })
-  helper.enableHelp(router, require('../package.json'))
+  helper.enableHelp(router, require('../../package.json'))
   app.router.use(router)
 }
