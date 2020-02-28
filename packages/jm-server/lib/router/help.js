@@ -1,7 +1,5 @@
 const helper = require('jm-ms-help')
-const MS = require('jm-ms-core')
-
-let ms = new MS()
+const ms = require('../ms')
 
 module.exports = function (app) {
   let router = ms.router()

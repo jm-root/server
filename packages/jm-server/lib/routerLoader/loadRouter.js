@@ -1,10 +1,9 @@
 const path = require('path')
 const fs = require('fs')
-const MS = require('jm-ms-core')
 const log = require('jm-log4js')
 
 const logger = log.getLogger('server')
-const ms = new MS()
+const ms = require('../ms')
 
 function loadRouterFile (service, dir, file) {
   const key = path.basename(file, '.js')

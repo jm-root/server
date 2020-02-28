@@ -1,10 +1,9 @@
 const log = require('jm-log4js')
-const MS = require('jm-ms')
 const http = require('http')
 const express = require('express')
 
 const logger = log.getLogger('server')
-const ms = new MS()
+const ms = require('./ms')
 
 module.exports = function (app) {
   let appWeb = null

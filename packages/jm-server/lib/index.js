@@ -3,12 +3,11 @@ const express = require('express')
 const { EventEmitter } = require('jm-event')
 const error = require('jm-err')
 const log = require('jm-log4js')
-const MS = require('jm-ms')
 const { arg2bool, arg2number } = require('jm-utils')
 const routerHelp = require('./router/help')
 const routerModule = require('./router/module')
 
-const ms = new MS()
+const ms = require('./ms')
 const logger = log.getLogger('server')
 
 function validateConfig (opts) {
@@ -252,6 +251,7 @@ class App extends EventEmitter {
 
 module.exports = {
   Server: App,
+  ms,
   Service: require('./service'),
   RouterLoader: require('./routerLoader')
 }
