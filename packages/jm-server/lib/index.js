@@ -1,4 +1,4 @@
-const proxy = require('http-proxy-middleware')
+const { createProxyMiddleware } = require('http-proxy-middleware')
 const express = require('express')
 const { EventEmitter } = require('jm-event')
 const error = require('jm-err')
@@ -106,7 +106,7 @@ class App extends EventEmitter {
       onProxyRes: function (proxyRes, req, res) {}
     }
     const router = express.Router()
-    router.use(proxy(prefix, options))
+    router.use(createProxyMiddleware(prefix, options))
     const module = router
     return {
       module,

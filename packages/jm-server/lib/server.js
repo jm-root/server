@@ -32,13 +32,6 @@ module.exports = function (app) {
     server = http.createServer(appWeb).listen(port, host, function () {
       logger.info('ms server listening on %s:%s ', host, server.address().port)
     })
-    if (maxBodySize) {
-      appWeb.use(express.json({ limit: maxBodySize }))
-      appWeb.use(express.urlencoded({ limit: maxBodySize, extended: true }))
-    } else {
-      appWeb.use(express.json())
-      appWeb.use(express.urlencoded({ extended: true }))
-    }
 
     appWeb.set('trust proxy', trustProxy) // 支持代理后面获取用户真实ip
 
@@ -56,6 +49,16 @@ module.exports = function (app) {
         next()
       }
     })
+
+    appWeb.use(this.httpProxyRouter)
+
+    if (maxBodySize) {
+      appWeb.use(express.json({ limit: maxBodySize }))
+      appWeb.use(express.urlencoded({ limit: maxBodySize, extended: true }))
+    } else {
+      appWeb.use(express.json())
+      appWeb.use(express.urlencoded({ extended: true }))
+    }
 
     // 启动ms服务器
     const { ms: configMS = [
@@ -92,8 +95,6 @@ module.exports = function (app) {
         next()
       })
     }
-
-    router.use(this.httpProxyRouter)
 
     this.emit('open', opts)
     return true
