@@ -1,6 +1,7 @@
 const log = require('jm-log4js')
 const http = require('http')
 const express = require('express')
+const morgan = require('morgan')
 
 const logger = log.getLogger('server')
 const ms = require('./ms')
@@ -28,19 +29,26 @@ module.exports = function (app) {
 
     // 启动web模块
     appWeb = express()
-    const { debug, lng, host = '0.0.0.0', port = 3000, max_body_size: maxBodySize, trust_proxy: trustProxy = false } = config
+    const { lng, host = '0.0.0.0', port = 3000, max_body_size: maxBodySize, trust_proxy: trustProxy = false } = config
     server = http.createServer(appWeb).listen(port, host, function () {
       logger.info('ms server listening on %s:%s ', host, server.address().port)
     })
 
     appWeb.set('trust proxy', trustProxy) // 支持代理后面获取用户真实ip
 
-    // 设置跨域访问
-    appWeb.use(function (req, res, next) {
+    // appWeb root
+    const appRoot = express.Router()
+    appWeb.use(appRoot)
+    appRoot.use(morgan('short'))
+    appRoot.use(function (req, res, next) {
+      // 设置跨域访问
       res.header('Access-Control-Allow-Origin', '*')
       res.header('Access-Control-Allow-Headers', 'X-Forwarded-For, X-Requested-With, Content-Type, Content-Length, Authorization, Accept')
       res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS, HEAD')
       res.header('Content-Type', 'application/json;charset=utf-8')
+
+      lng && (req.lng = lng)
+
       if (req.method === 'OPTIONS' || req.method === 'HEAD') {
         res.status(200).end()
       } else if (req.url.indexOf('/favicon.ico') >= 0) {
@@ -50,15 +58,21 @@ module.exports = function (app) {
       }
     })
 
+    // httpProxy
     appWeb.use(this.httpProxyRouter)
 
+    // middle
+    const router = express.Router()
     if (maxBodySize) {
-      appWeb.use(express.json({ limit: maxBodySize }))
-      appWeb.use(express.urlencoded({ limit: maxBodySize, extended: true }))
+      router.use(express.json({ limit: maxBodySize }))
+      router.use(express.urlencoded({ limit: maxBodySize, extended: true }))
     } else {
-      appWeb.use(express.json())
-      appWeb.use(express.urlencoded({ extended: true }))
+      router.use(express.json())
+      router.use(express.urlencoded({ extended: true }))
     }
+
+    appWeb.root = appRoot
+    appWeb.middle = router
 
     // 启动ms服务器
     const { ms: configMS = [
@@ -75,24 +89,6 @@ module.exports = function (app) {
       servers[opts.type] = doc
       doc.on('connection', function (session) {
         self.emit('connection', session)
-      })
-    }
-
-    const router = express.Router()
-    servers.http.middle = router
-    if (debug) {
-      router.use(function (req, res, next) {
-        // const {method, url, params, query, body, headers} = req
-        // logger.debug('%s %s params: %j query: %j body: %j headers: %j', method, url, params, query, body, headers)
-        const { method, url } = req
-        logger.debug(`${method} ${url}`)
-        next()
-      })
-    }
-    if (lng) {
-      router.use(function (req, res, next) {
-        req.lng = lng
-        next()
       })
     }
 
