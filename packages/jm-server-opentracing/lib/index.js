@@ -125,7 +125,12 @@ module.exports = class {
       }
     }
 
-    app.servers.http && (app.servers.http.middle.use(filterTracer))
+    const { http = {} } = app.servers
+    if (http.root) {
+      http.root.use(filterTracer)
+    } else if (http.middle) { // 兼容jm-server@2.1.0和以下版本
+      http.middle.use(filterTracer)
+    }
     axios.interceptors.request.use(axiosMiddlewareRequest())
     axios.interceptors.response.use(axiosMiddlewareResponse(), axiosMiddlewareResponseError())
   }
