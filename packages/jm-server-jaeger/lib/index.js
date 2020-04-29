@@ -45,7 +45,7 @@ module.exports = function (opts = {}) {
         }
       }
 
-      return new $Tracer({
+      new $Tracer({  // eslint-disable-line
         app,
         tracer,
         name: 'jaeger',
