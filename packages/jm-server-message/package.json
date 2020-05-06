@@ -1,0 +1,25 @@
+{
+  "name": "jm-server-message",
+  "version": "1.0.0",
+  "description": "message for jm-server",
+  "main": "./lib/index",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jm-root/middle.git"
+  },
+  "keywords": [
+    "javascript",
+    "jm-server-message"
+  ],
+  "author": {
+    "name": "Jeff YU"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jm-root/middle/issues"
+  },
+  "homepage": "https://github.com/jm-root/middle",
+  "dependencies": {}
+}
