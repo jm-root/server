@@ -1,6 +1,6 @@
 {
   "name": "jm-server",
-  "version": "2.1.1",
+  "version": "2.1.2-beta",
   "description": "micro server using jm-ms",
   "main": "./lib/index",
   "repository": {
@@ -28,6 +28,7 @@
     "jm-ms-help": "^2.0.2",
     "jm-ms-wrapper": "^1.0.1",
     "jm-utils": "^1.0.5",
+    "jsonpath": "^1.0.2",
     "morgan": "^1.10.0",
     "yargs": "^7.0.2"
   },

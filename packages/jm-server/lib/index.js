@@ -1,4 +1,5 @@
 const { createProxyMiddleware } = require('http-proxy-middleware')
+const jp = require('jsonpath')
 const express = require('express')
 const { EventEmitter } = require('jm-event')
 const error = require('jm-err')
@@ -127,13 +128,19 @@ class App extends EventEmitter {
 
   // 加载模块
   loadModule (opts) {
-    const { name, config, noRouter = false } = opts
+    const { name, config, noRouter = false, jsonpath } = opts
     const { module: moduleName = name } = opts
     if (!moduleName && !opts.require) {
       logger.warn('use failed. %s: %j', name, opts)
       return
     }
-    const Module = require(moduleName)
+    let Module = require(moduleName)
+    if (jsonpath) {
+      Module = jp.value(Module, jsonpath)
+    }
+    if (!Module) {
+      logger.warn('use failed, no Module found. %s: %j', name, opts)
+    }
     const { version } = require(`${moduleName}/package.json`)
     const moduleInfo = { version }
     let module
