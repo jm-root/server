@@ -1,4 +1,7 @@
 # History
+## 2.1.2 / 2020-06-07
+- jsonpath
+
 ## 2.0.9 / 2019-11-13
 - event.enableEvent(server, {async: true})
 

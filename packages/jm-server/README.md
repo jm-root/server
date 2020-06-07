@@ -117,6 +117,7 @@ module.exports = function(opts) {
     key: {
         prefix: '前缀', // 可选，如果不配置，默认用 '/key'
         module: 'jm-ms-message', // 模块名或者模块路径
+        jsonpath: '$.a.b', // 可选，以jm-ms-message.a.b作为实际模块，用于模块库里有多个模块时指定其中一个模块
         config: {}
     }
 }
