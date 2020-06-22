@@ -7,6 +7,7 @@ const log = require('jm-log4js')
 const { arg2bool, arg2number } = require('jm-utils')
 const routerHelp = require('./router/help')
 const routerModule = require('./router/module')
+const { couldBeClass } = require('could-be-class')
 
 const ms = require('./ms')
 const logger = log.getLogger('server')
@@ -145,7 +146,12 @@ class App extends EventEmitter {
     const moduleInfo = { version }
     let module
     if (typeof Module === 'function') {
-      module = Module.call(this, Object.assign({}, this.config, config), this)
+      const cfg = Object.assign({}, this.config, config)
+      if (couldBeClass(Module)) {
+        module = new Module(cfg, this)
+      } else {
+        module = Module.call(this, cfg, this)
+      }
     } else {
       module = Module
     }
@@ -260,5 +266,6 @@ module.exports = {
   Server: App,
   ms,
   Service: require('./service'),
-  RouterLoader: require('./routerLoader')
+  RouterLoader: require('./routerLoader'),
+  decorators: require('./decorators')
 }

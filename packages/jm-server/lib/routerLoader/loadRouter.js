@@ -1,7 +1,7 @@
 const path = require('path')
 const fs = require('fs')
 const log = require('jm-log4js')
-
+const { couldBeClass } = require('could-be-class')
 const logger = log.getLogger('server')
 const ms = require('../ms')
 
@@ -10,7 +10,14 @@ function loadRouterFile (service, dir, file) {
   let prefix = `/${key}`
   key === 'index' && (prefix = '/')
   if (!fs.existsSync(`${dir}/${file}`) || !fs.statSync(`${dir}/${file}`).isFile()) return
-  const router = require(`${dir}/${key}`)(service)
+  const Mdl = require(`${dir}/${key}`)
+  let router
+  if (couldBeClass(Mdl)) {
+    router = new Mdl(service)
+  } else {
+    router = Mdl(service)
+  }
+  if (router.router && typeof router.router === 'function') router = router.router()
   router.prefix || (router.prefix = prefix)
   logger.debug(`load router ${prefix}`)
   return router
