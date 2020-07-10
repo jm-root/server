@@ -1,6 +1,6 @@
 {
   "name": "jm-server",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "micro server using jm-ms",
   "main": "./lib/index",
   "repository": {

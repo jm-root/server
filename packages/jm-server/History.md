@@ -1,4 +1,7 @@
 # History
+## 2.1.6 / 2020-07-10
+- fix moduleInfo
+
 ## 2.1.3 / 2020-06-22
 - decorators
 - couldBeClass

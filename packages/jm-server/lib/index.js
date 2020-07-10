@@ -142,8 +142,12 @@ class App extends EventEmitter {
     if (!Module) {
       logger.warn('use failed, no Module found. %s: %j', name, opts)
     }
-    const { version } = require(`${moduleName}/package.json`)
-    const moduleInfo = { version }
+
+    const moduleInfo = {}
+    try {
+      const { version } = require(`${moduleName}/package.json`)
+      Object.assign(moduleInfo, { version })
+    } catch (e) {}
     let module
     if (typeof Module === 'function') {
       const cfg = Object.assign({}, this.config, config)
