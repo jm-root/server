@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 'use strict'
-require('colors')
 const fs = require('fs')
 const path = require('path')
 const argv = require('yargs')
