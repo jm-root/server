@@ -152,7 +152,7 @@ module.exports = function(opts) {
     key: {
       prefix: '前缀',
       changeOrigin: false, // 是否跨域
-      httpProxy: 'http://localhost/config', // 直接转发
+      httpProxy: 'http://localhost', // 直接转发
     }
 
 }
