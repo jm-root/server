@@ -1,13 +1,12 @@
 const { createProxyMiddleware } = require('http-proxy-middleware')
 const jp = require('jsonpath')
 const express = require('express')
-const { EventEmitter } = require('jm-event')
-const error = require('jm-err')
 const log = require('jm-log4js')
-const { arg2bool, arg2number } = require('jm-utils')
 const routerHelp = require('./router/help')
 const routerModule = require('./router/module')
 const { couldBeClass } = require('could-be-class')
+const { EventEmitter, Err, err, utils } = require('jamma')
+const { arg2bool, arg2number } = utils
 
 const ms = require('./ms')
 const logger = log.getLogger('server')
@@ -90,9 +89,9 @@ class App extends EventEmitter {
 
     this.root
       .use(({ lng } = {}) => {
-        const { Err: { t, FA_NOTFOUND } } = error
+        const { t, FA_NOTFOUND } = Err
         const doc = Object.assign({}, FA_NOTFOUND, { msg: t(FA_NOTFOUND.msg, lng) || FA_NOTFOUND.msg })
-        throw error.err(doc)
+        throw err(doc)
       })
     return true
   }

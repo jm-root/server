@@ -1,4 +1,4 @@
-const { EventEmitter } = require('jm-event')
+const { EventEmitter } = require('jamma')
 const RouterLoader = require('./routerLoader')
 
 class Service extends EventEmitter {

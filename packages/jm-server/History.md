@@ -1,4 +1,7 @@
 # History
+## 2.2.0 / 2025-09-13
+- jamma
+
 ## 2.1.6 / 2020-07-10
 - fix moduleInfo
 

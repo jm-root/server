@@ -1,2 +1,2 @@
-const MS = require('jm-ms')
-module.exports = new MS()
+const { ms } = require('jamma')
+module.exports = ms

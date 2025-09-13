@@ -1,8 +1,6 @@
 const cluster = require('cluster')
+const { EventEmitter, ms } = require('jamma')
 const log = require('jm-log4js')
-const event = require('jm-event')
-const MS = require('jm-ms-core')
-const ms = new MS()
 const logger = log.getLogger('message')
 
 module.exports = function (opts = {}) {
@@ -73,7 +71,7 @@ module.exports = function (opts = {}) {
     }
 
   }
-  event.enableEvent(model, { async: true })
+  EventEmitter.enableEvent(model, { async: true })
 
   if (cluster.isWorker) {
     process.on('message', function (msg) {

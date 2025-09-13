@@ -1,4 +1,4 @@
-const helper = require('jm-ms-help')
+const helper = require('../helper')
 const ms = require('../ms')
 
 module.exports = function (app) {

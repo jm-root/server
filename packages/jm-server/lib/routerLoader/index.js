@@ -1,6 +1,6 @@
 const fs = require('fs')
-const error = require('jm-err')
-const wrapper = require('jm-ms-wrapper')
+const { Err, err } = require('jamma')
+const wrapper = require('../wrapper')
 const loadRouter = require('./loadRouter')
 const ms = require('../ms')
 
@@ -35,7 +35,7 @@ class Router {
     router
       .use(() => {
         const { ready } = service
-        if (ready !== undefined && !ready) throw error.err(error.Err.FA_NOTREADY)
+        if (ready !== undefined && !ready) throw err(Err.FA_NOTREADY)
       })
       .use(loadRouter(service, dir))
   }
