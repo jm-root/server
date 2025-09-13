@@ -1,6 +1,7 @@
 const fs = require('fs')
 const { Err, err } = require('jamma')
 const wrapper = require('../wrapper')
+const helper = require('../helper')
 const loadRouter = require('./loadRouter')
 const ms = require('../ms')
 
@@ -28,7 +29,7 @@ class Router {
           help.status = 1
           if (!service.ready) help.status = 0
         })
-        require('jm-ms-help').enableHelp(router, pkg)
+        helper.enableHelp(router, pkg)
       }
     }
 

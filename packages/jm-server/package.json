@@ -1,6 +1,6 @@
 {
   "name": "jm-server",
-  "version": "2.2.0-beta",
+  "version": "2.2.2-beta",
   "description": "micro server using jamma",
   "main": "./lib/index",
   "repository": {

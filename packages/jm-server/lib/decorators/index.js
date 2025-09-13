@@ -1,5 +1,5 @@
 const ms = require('../ms')
-const { utils: { uniteParams } } = require('jamma')
+const { utils: { uniteParams } } = ms
 
 class TempRouter {
   constructor () {
