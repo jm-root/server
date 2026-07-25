@@ -174,6 +174,7 @@ module.exports = function(opts) {
 |host|'0.0.0.0'|监听的IP地址
 |prefix||Uri前缀
 |trust_proxy|false|是否传递IP地址
+|no_query_extended|false|是否禁用query参数深度解析
 |lng||语言
 |max_body_size|'100kb'|设置允许请求的body的大小, 例如 '5mb'
 

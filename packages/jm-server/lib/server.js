@@ -29,12 +29,13 @@ module.exports = function (app) {
 
     // 启动web模块
     appWeb = express()
-    const { lng, host = '0.0.0.0', port = 3000, max_body_size: maxBodySize, trust_proxy: trustProxy = false } = config
+    const { lng, host = '0.0.0.0', port = 3000, max_body_size: maxBodySize, trust_proxy: trustProxy = false, no_query_extended: noQueryExtended = false } = config
     server = http.createServer(appWeb).listen(port, host, function () {
       logger.info('ms server listening on %s:%s ', host, server.address().port)
     })
 
     appWeb.set('trust proxy', trustProxy) // 支持代理后面获取用户真实ip
+    noQueryExtended || appWeb.set('query parser', 'extended') // 支持query参数解析数组
 
     // appWeb root
     const appRoot = express.Router()

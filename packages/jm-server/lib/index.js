@@ -12,7 +12,7 @@ const ms = require('./ms')
 const logger = log.getLogger('server')
 
 function validateConfig (opts) {
-  let v = ['debug', 'trust_proxy', 'no_auto_init', 'no_auto_open']
+  let v = ['debug', 'trust_proxy', 'no_auto_init', 'no_auto_open', 'no_query_extended']
   v.forEach(function (key) {
     const value = opts[key]
     value !== undefined && (opts[key] = arg2bool(value))
@@ -29,7 +29,7 @@ class App extends EventEmitter {
   constructor (opts) {
     super({ async: true })
 
-    const v = ['host', 'port', 'debug', 'prefix', 'trust_proxy', 'lng', 'no_auto_init', 'no_auto_open', 'max_body_size']
+    const v = ['host', 'port', 'debug', 'prefix', 'trust_proxy', 'lng', 'no_auto_init', 'no_auto_open', 'max_body_size', 'no_query_extended']
     v.forEach(function (key) {
       process.env[key] && (opts[key] = process.env[key])
     })
